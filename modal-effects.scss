@@ -1,0 +1,461 @@
+/*!
+ * modal-effects.scss v1.0.0
+ * MIT License
+ * https://github.com/alekstar79/modal-effects
+ *
+ * SCSS source for the modal-effects CSS library.
+ *
+ * Compile:
+ *   sass modal-effects.scss modal-effects.css --style=expanded --no-source-map
+ *   sass modal-effects.scss modal-effects.min.css --style=compressed --no-source-map
+ */
+
+// ============================================================
+// Configuration
+//
+// Override in your own SCSS via @use with (...):
+//
+//   @use 'modal-effects' with (
+//     $overlay-bg:   rgba(0, 0, 0, 0.8),
+//     $modal-radius: 12px
+//   );
+// ============================================================
+
+$overlay-bg:      rgba(0, 0, 0, 0.6) !default;
+$overlay-padding: 16px !default;
+$overlay-z:       999 !default;
+$overlay-fade:    0.5s !default;
+
+$modal-bg:        #fff !default;
+$modal-radius:    24px !default;
+$modal-max-width: 500px !default;
+$modal-padding:   32px !default;
+$modal-shadow:    0 30px 60px rgba(0, 0, 0, 0.5) !default;
+
+$ease-back:       cubic-bezier(0.34, 1.56, 0.64, 1) !default;
+$ease-spring:     cubic-bezier(0.68, -0.55, 0.27, 1.55) !default;
+
+// ============================================================
+
+@layer modal-effects {
+
+  // ----------------------------------------------------------
+  // Base
+  // ----------------------------------------------------------
+  .overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    padding: $overlay-padding;
+    background: $overlay-bg;
+    visibility: hidden;
+    opacity: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: $overlay-z;
+    transition: opacity $overlay-fade ease, visibility $overlay-fade ease;
+  }
+
+  .overlay.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modal {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: $modal-max-width;
+    padding: $modal-padding;
+    background: $modal-bg;
+    border-radius: $modal-radius;
+    box-shadow: $modal-shadow;
+  }
+
+  // ----------------------------------------------------------
+  // 1. Top → Bottom
+  // ----------------------------------------------------------
+  .overlay-top {
+    perspective: 800px;
+  }
+
+  .overlay-top .modal {
+    transform: rotateX(90deg);
+    transform-origin: top center;
+    transition: transform 0.7s $ease-back;
+  }
+
+  .overlay-top.open .modal {
+    transform: rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 2. Left → Right
+  // ----------------------------------------------------------
+  .overlay-left {
+    perspective: 1000px;
+  }
+
+  .overlay-left .modal {
+    transform: rotateY(90deg);
+    transform-origin: left center;
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-left.open .modal {
+    transform: rotateY(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 3. Bottom → Top
+  // ----------------------------------------------------------
+  .overlay-bottom {
+    perspective: 800px;
+  }
+
+  .overlay-bottom .modal {
+    transform: rotateX(-90deg);
+    transform-origin: bottom center;
+    transition: transform 0.7s $ease-back;
+  }
+
+  .overlay-bottom.open .modal {
+    transform: rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 4. Right → Left
+  // ----------------------------------------------------------
+  .overlay-right {
+    perspective: 1000px;
+  }
+
+  .overlay-right .modal {
+    transform: rotateY(-90deg);
+    transform-origin: right center;
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-right.open .modal {
+    transform: rotateY(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 5. Slide Left → Right
+  // ----------------------------------------------------------
+  .overlay-slide-left {
+    perspective: 1000px;
+  }
+
+  .overlay-slide-left .modal {
+    transform: translate3d(-150%, 0, 0) rotateY(90deg);
+    transform-origin: left center;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-slide-left.open .modal {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 6. Slide Right → Left
+  // ----------------------------------------------------------
+  .overlay-slide-right {
+    perspective: 1000px;
+  }
+
+  .overlay-slide-right .modal {
+    transform: translate3d(150%, 0, 0) rotateY(-90deg);
+    transform-origin: right center;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-slide-right.open .modal {
+    transform: translate3d(0, 0, 0) rotateY(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 7. Slide Top → Bottom
+  // ----------------------------------------------------------
+  .overlay-slide-top {
+    perspective: 800px;
+  }
+
+  .overlay-slide-top .modal {
+    transform: translate3d(0, -150%, 0) rotateX(90deg);
+    transform-origin: top center;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-slide-top.open .modal {
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 8. Slide Bottom → Top
+  // ----------------------------------------------------------
+  .overlay-slide-bottom {
+    perspective: 800px;
+  }
+
+  .overlay-slide-bottom .modal {
+    transform: translate3d(0, 150%, 0) rotateX(-90deg);
+    transform-origin: bottom center;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-slide-bottom.open .modal {
+    transform: translate3d(0, 0, 0) rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 9. Spring
+  // ----------------------------------------------------------
+  .overlay-spring .modal {
+    transform: scale(0);
+    transition: transform 0.8s $ease-spring;
+  }
+
+  .overlay-spring.open .modal {
+    transform: scale(1);
+  }
+
+  // ----------------------------------------------------------
+  // 11. Zoom Rotate
+  // ----------------------------------------------------------
+  .overlay-zoomrotate .modal {
+    transform: scale(0) rotate(45deg);
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-zoomrotate.open .modal {
+    transform: scale(1) rotate(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 12. Perspective 3D
+  // ----------------------------------------------------------
+  .overlay-perspective {
+    perspective: 600px;
+  }
+
+  .overlay-perspective .modal {
+    transform: translateZ(-300px) rotateX(30deg);
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-perspective.open .modal {
+    transform: translateZ(0) rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 13. Origami L → R
+  // ----------------------------------------------------------
+  .overlay-origami .modal {
+    transform: rotate(-90deg) scale(0.3) skewX(20deg);
+    transform-origin: top left;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-origami.open .modal {
+    transform: rotate(0deg) scale(1) skewX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 14. Bounce
+  // ----------------------------------------------------------
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .overlay-bounce .modal {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  .overlay-bounce.open .modal {
+    animation: bounceIn 0.8s $ease-spring forwards;
+  }
+
+  // ----------------------------------------------------------
+  // 15. Diagonal Top Left
+  // ----------------------------------------------------------
+  .overlay-diagonal .modal {
+    transform: translate3d(-200%, 200%, 0) rotate(45deg);
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-diagonal.open .modal {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 16. Convex
+  // ----------------------------------------------------------
+  .overlay-convex {
+    perspective: 800px;
+  }
+
+  .overlay-convex .modal {
+    transform: scale(0.3) rotateX(20deg) rotateY(20deg);
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.5),
+      inset 0 -20px 40px rgba(0, 0, 0, 0.1),
+      inset 0 20px 40px rgba(255, 255, 255, 0.3);
+    transition:
+      transform 0.8s $ease-back,
+      border-radius 0.8s $ease-back,
+      opacity 0.6s ease,
+      box-shadow 0.8s ease;
+  }
+
+  .overlay-convex.open .modal {
+    transform: scale(1) rotateX(0deg) rotateY(0deg);
+    border-radius: $modal-radius;
+    opacity: 1;
+    box-shadow:
+      0 30px 60px rgba(0, 0, 0, 0.5),
+      inset 0 -10px 30px rgba(0, 0, 0, 0.05),
+      inset 0 10px 30px rgba(255, 255, 255, 0.2);
+  }
+
+  // ----------------------------------------------------------
+  // 17. Diagonal Top Right
+  // ----------------------------------------------------------
+  .overlay-diagonal-top-right .modal {
+    transform: translate3d(200%, -200%, 0) rotate(-45deg);
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-diagonal-top-right.open .modal {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 18. Diagonal Bottom Left
+  // ----------------------------------------------------------
+  .overlay-diagonal-bottom-left .modal {
+    transform: translate3d(-200%, -200%, 0) rotate(-45deg);
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-diagonal-bottom-left.open .modal {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 19. Diagonal Bottom Right
+  // ----------------------------------------------------------
+  .overlay-diagonal-bottom-right .modal {
+    transform: translate3d(200%, 200%, 0) rotate(45deg);
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-diagonal-bottom-right.open .modal {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 20. Origami R → L
+  // ----------------------------------------------------------
+  .overlay-origami-right .modal {
+    transform: rotate(90deg) scale(0.3) skewX(-20deg);
+    transform-origin: top right;
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-origami-right.open .modal {
+    transform: rotate(0deg) scale(1) skewX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 21. Flip X
+  // ----------------------------------------------------------
+  .overlay-flip-x {
+    perspective: 800px;
+  }
+
+  .overlay-flip-x .modal {
+    transform: rotateX(180deg);
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-flip-x.open .modal {
+    transform: rotateX(0deg);
+  }
+
+  // ----------------------------------------------------------
+  // 22. Flip Y → Scale (L → R)
+  // ----------------------------------------------------------
+  .overlay-flip-ys {
+    perspective: 800px;
+  }
+
+  .overlay-flip-ys .modal {
+    transform: rotateY(180deg) scale(0.3);
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-flip-ys.open .modal {
+    transform: rotateY(0deg) scale(1);
+  }
+
+  // ----------------------------------------------------------
+  // 23. Flip Y ← Scale (R → L)
+  // ----------------------------------------------------------
+  .overlay-flip-ys-reverse {
+    perspective: 800px;
+  }
+
+  .overlay-flip-ys-reverse .modal {
+    transform: rotateY(-180deg) scale(0.3);
+    transition: transform 0.8s $ease-back;
+  }
+
+  .overlay-flip-ys-reverse.open .modal {
+    transform: rotateY(0deg) scale(1);
+  }
+
+  // ----------------------------------------------------------
+  // 24. Flip Mix
+  // ----------------------------------------------------------
+  .overlay-flip-mix {
+    perspective: 800px;
+  }
+
+  .overlay-flip-mix .modal {
+    transform: rotateX(180deg) rotateY(180deg) scale(0.3);
+    transition: transform 0.9s $ease-back;
+  }
+
+  .overlay-flip-mix.open .modal {
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+  }
+
+  // ----------------------------------------------------------
+  // Reduced motion
+  // ----------------------------------------------------------
+  @media (prefers-reduced-motion: reduce) {
+    .overlay,
+    .overlay .modal,
+    .overlay.open .modal {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}

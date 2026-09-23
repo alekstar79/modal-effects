@@ -1,0 +1,36 @@
+{
+  "name": "@alekstar79/modal-effects",
+  "description": "24 pure-CSS modal entrance and exit animations - roll, flip, bounce, slide, spring, origami and more.",
+  "author": "Aleksey Tarasenko <alekstar79@yandex.ru>",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alekstar79/modal-effects.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alekstar79/modal-effects/issues"
+  },
+  "homepage": "https://github.com/alekstar79/modal-effects#readme",
+  "keywords": [
+    "animation",
+    "effect",
+    "css",
+    "scss",
+    "modals",
+    "dialogs"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:gh-pages": "tsc && vite build --mode gh-pages",
+    "preview": "vite preview",
+    "preview:gh-pages": "vite preview --outDir dist-gh-pages --base /modal-effects/"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.0",
+    "vite": "^8.2.2"
+  }
+}
